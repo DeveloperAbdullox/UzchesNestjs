@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseModel } from '../../../core/base-model.entity';
+import { CourseSection } from '@/features/courses/entities/course-section.entity';
 
 
 @Entity('courseLessons')
@@ -14,7 +15,7 @@ export class CourseLesson extends BaseModel {
   @Column()
   courseSectionId!: number;
 
-  @ManyToOne('CoruseSection', 'lessons', { onDelete: 'CASCADE' })
+  @ManyToOne(() => CourseSection, (sections) => sections.lessons, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'courseSectionId' })
   courseSection?: any;
 

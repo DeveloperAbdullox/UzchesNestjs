@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
-import { BaseModel } from '@/core/base-model.entity';
+import { BaseModel } from '../../../core/base-model.entity';
 import { User } from '../../authentication/entities/user.entity';
 import { Book } from './book.entity';
 
@@ -11,7 +11,7 @@ export class BookLike extends BaseModel {
 
   @ManyToOne('User', 'bookLikes', { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
-  user?: User;
+  user?: any;
 
   @Column()
   bookId!: number;

@@ -1,6 +1,6 @@
 import { BaseModel } from '@/core/base-model.entity';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { ReportCategory } from './report-category.entity';
+// import { ReportCategory } from './report-category.entity';
 import { ReportType } from '@/core/enums/report-type.enum';
 
 @Entity('reports')
@@ -14,9 +14,9 @@ export class Report extends BaseModel {
   @Column()
   categoryId!: number;
 
-  @ManyToOne(() => ReportCategory, (category) => category.reports, { onDelete: 'RESTRICT' })
+  @ManyToOne('ReportCategory', 'reports', { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'categoryId' })
-  category?: ReportCategory;
+  category?: any;
 
   @Column({ type: 'enum', enum: ReportType })
   target!: ReportType;
