@@ -1,22 +1,27 @@
 import { BaseModel } from '@/core/base-model.entity';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-// import { ReportCategory } from './report-category.entity';
+import type { Relation } from 'typeorm';
+import { ApiHideProperty } from '@nestjs/swagger';
 import { ReportType } from '@/core/enums/report-type.enum';
+import { User } from '@/features/authentication/entities/user.entity';
+import { ReportCategory } from '@/features/reports/entities/report-category.entity';
 
 @Entity('reports')
 export class Report extends BaseModel {
   @Column()
   userId!: number;
 
-  @ManyToOne('User', 'reports')
-  user?: any;
+  @ManyToOne(() => User, (users) => users.reports)
+  @ApiHideProperty()
+  user?: Relation<User>;
 
   @Column()
   categoryId!: number;
 
-  @ManyToOne('ReportCategory', 'reports', { onDelete: 'RESTRICT' })
+  @ManyToOne(() => ReportCategory, (report) => report.reports, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'categoryId' })
-  category?: any;
+  @ApiHideProperty()
+  category?: Relation<ReportCategory>;
 
   @Column({ type: 'enum', enum: ReportType })
   target!: ReportType;

@@ -1,5 +1,7 @@
 import { BaseModel } from '@/core/base-model.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
+import type { Relation } from 'typeorm';
+import { ApiHideProperty } from '@nestjs/swagger';
 import { Report } from './report.entity';
 
 @Entity('reportCategories')
@@ -11,5 +13,6 @@ export class ReportCategory extends BaseModel {
   order?: number;
 
   @OneToMany('Report', 'category')
-  reports?: any[];
+  @ApiHideProperty()
+  reports?: Relation<Report[]>;
 }

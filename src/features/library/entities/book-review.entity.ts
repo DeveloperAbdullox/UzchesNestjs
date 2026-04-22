@@ -1,5 +1,7 @@
-import { BaseModel } from '../../../core/base-model.entity';
-import { Column, JoinColumn, ManyToOne, Entity } from "typeorm";
+import { BaseModel } from '@/core/base-model.entity';
+import { Column, JoinColumn, ManyToOne, Entity } from 'typeorm';
+import type { Relation } from 'typeorm';
+import { ApiHideProperty } from '@nestjs/swagger';
 import { User } from '../../authentication/entities/user.entity';
 import { Book } from '@/features/library/entities/book.entity';
 
@@ -8,16 +10,18 @@ export class BookReview extends BaseModel {
   @Column()
   userId!: number;
 
-  @ManyToOne(() => User, (user) => user.bookReviews, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (users) => users.bookReviews, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
-  user: any;
+  @ApiHideProperty()
+  user!: Relation<User>;
 
   @Column()
   bookId!: number;
 
   @ManyToOne(() => Book, (book) => book.reviews, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'bookId' })
-  book?: any;
+  @ApiHideProperty()
+  book?: Relation<Book>;
 
   @Column()
   rating!: number;

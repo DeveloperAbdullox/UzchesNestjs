@@ -1,23 +1,27 @@
 import { BaseModel } from '@/core/base-model.entity';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-// import { User } from '../../authentication/entities/user.entity';
-// import { Course } from './course.entity';
+import type { Relation } from 'typeorm';
+import { ApiHideProperty } from '@nestjs/swagger';
+import { Course } from '@/features/courses/entities/course.entity';
+import { User } from '@/features/authentication/entities/user.entity';
 
 @Entity('coursePurchases')
 export class CoursePurchase extends BaseModel {
   @Column()
   userId!: number;
 
-  @ManyToOne('User', 'courseLikes', { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.courseLikes, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
-  user?: any;
+  @ApiHideProperty()
+  user?: Relation<User>;
 
   @Column()
   courseId!: number;
 
-  @ManyToOne('Course', 'purchases', { onDelete: 'RESTRICT' })
+  @ManyToOne(() => Course, (course) => course.purchases, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'courseId' })
-  course?: any;
+  @ApiHideProperty()
+  course?: Relation<Course>;
 
   @Column({ type: 'boolean', default: false })
   isCompleted!: boolean;

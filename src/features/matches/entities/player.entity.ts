@@ -1,6 +1,9 @@
 import { BaseModel } from '@/core/base-model.entity';
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import type { Relation } from 'typeorm';
+import { ApiHideProperty } from '@nestjs/swagger';
 import { Country } from '../../common/entities/country.entity';
+import { Match } from '@/features/matches/entities/match.entity';
 
 @Entity('players')
 export class Player extends BaseModel {
@@ -8,7 +11,8 @@ export class Player extends BaseModel {
   countryId!: number;
 
   @ManyToOne(() => Country, (country) => country.players, { onDelete: 'RESTRICT' })
-  country?: Country;
+  @ApiHideProperty()
+  country?: Relation<Country>;
 
   @Column({ length: 64 })
   fullName!: string;
@@ -25,9 +29,11 @@ export class Player extends BaseModel {
   @Column({ nullable: true })
   blitz?: number;
 
-  @OneToMany('Match', 'firstPlayer')
-  matchesAsFirst?: any[];
+  @OneToMany(() => Match, (match) => match.firstPlayer)
+  @ApiHideProperty()
+  matchesAsFirst?: Relation<Match[]>;
 
-  @OneToMany('Match', 'secondPlayer')
-  matchesAsSecond?: any[];
+  @OneToMany(() => Match, (match) => match.secondPlayer)
+  @ApiHideProperty()
+  matchesAsSecond?: Relation<Match[]>;
 }

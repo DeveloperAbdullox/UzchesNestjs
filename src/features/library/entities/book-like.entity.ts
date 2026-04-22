@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-
-import { BaseModel } from '../../../core/base-model.entity';
+import type { Relation } from 'typeorm';
+import { ApiHideProperty } from '@nestjs/swagger';
+import { BaseModel } from '@/core/base-model.entity';
 import { User } from '../../authentication/entities/user.entity';
 import { Book } from './book.entity';
 
@@ -9,14 +10,16 @@ export class BookLike extends BaseModel {
   @Column()
   userId!: number;
 
-  @ManyToOne('User', 'bookLikes', { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (users) => users.bookLikes, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
-  user?: any;
+  @ApiHideProperty()
+  user?: Relation<User>;
 
   @Column()
   bookId!: number;
 
-  @ManyToOne('Book', 'likes', { onDelete: 'CASCADE' })
+  @ManyToOne(() => Book, (books) => books.likes, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'bookId' })
-  book?: Book;
+  @ApiHideProperty()
+  book?: Relation<Book>;
 }

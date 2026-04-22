@@ -9,7 +9,7 @@ import { NewsDetailDtoAdmin } from '../dtos/news/admin/news.detail.dto.admin';
 @Injectable()
 export class NewsServiceAdmin {
   async create(payload: NewsCreateDtoAdmin, image: Express.Multer.File): Promise<News> {
-    let newNews = News.create({ ...payload, image: image.path });
+    const newNews = News.create({ ...payload, image: image.path });
     await News.save(newNews);
     return newNews;
   }

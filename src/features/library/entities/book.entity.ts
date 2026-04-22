@@ -1,41 +1,48 @@
 import { BaseModel } from '@/core/base-model.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
-// import { Author } from '../../common/entities/author.entity';
-// import { Language } from '../../common/entities/language.entity';
-// import { Difficulty } from '../../common/entities/difficulty.entity';
-// import { BookCategory } from './book-category.entity';
-// import { BookReview } from './book-review.entity';
-// import { BookLike } from './book-like.entity';
+import type { Relation } from 'typeorm';
+import { ApiHideProperty } from '@nestjs/swagger';
+import { Author } from '@/features/common/entities/author.entity';
+import { BookCategory } from '@/features/library/entities/book-category.entity';
+import { Language } from '@/features/common/entities/language.entity';
+import { Difficulty } from '@/features/common/entities/difficulty.entity';
+import { BookReview } from '@/features/library/entities/book-review.entity';
+import { BookLike } from '@/features/library/entities/book-like.entity';
 
 @Entity('books')
 export class Book extends BaseModel {
+
   @Column()
   authorId!: number;
 
-  @ManyToOne('Author', 'books', { onDelete: 'RESTRICT' })
+  @ManyToOne(() => Author, (author) => author.books, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'authorId' })
-  author?: any;
+  @ApiHideProperty()
+  author?: Relation<Author>;
 
   @Column()
   categoryId!: number;
 
-  @ManyToOne('BookCategory', 'books', { onDelete: 'RESTRICT' })
+  @ManyToOne(() => BookCategory, (category) => category.books, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'categoryId' })
-  category?: any;
+  @ApiHideProperty()
+  category?: Relation<BookCategory>;
 
   @Column()
   languageId!: number;
 
-  @ManyToOne('Language', 'books', { onDelete: 'RESTRICT' })
+  @ManyToOne(() => Language, (language) => language.books, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'languageId' })
-  language?: any;
+  @ApiHideProperty()
+  language?: Relation<Language>;
 
   @Column()
   difficultyId!: number;
 
-  @ManyToOne('Difficulty', 'books', { onDelete: 'RESTRICT' })
+  @ManyToOne(() => Difficulty, (difficult) => difficult.books, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'difficultyId' })
-  difficulty?: any;
+  @ApiHideProperty()
+  difficulty?: Relation<Difficulty>;
 
   @Column({ length: 256 })
   title!: string;
@@ -64,9 +71,11 @@ export class Book extends BaseModel {
   @Column({ type: 'date' })
   pubDate!: Date;
 
-  @OneToMany('BookReview', 'book')
-  reviews?: any[];
+  @OneToMany(() => BookReview, (review) => review.book)
+  @ApiHideProperty()
+  reviews?: Relation<BookReview[]>;
 
-  @OneToMany('BookLike', 'book')
-  likes?: any[];
+  @OneToMany(() => BookLike, (like) => like.book)
+  @ApiHideProperty()
+  likes?: Relation<BookLike[]>;
 }

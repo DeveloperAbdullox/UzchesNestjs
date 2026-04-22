@@ -1,4 +1,6 @@
 import { Column, Entity, OneToMany } from 'typeorm';
+import type { Relation } from 'typeorm';
+import { ApiHideProperty } from '@nestjs/swagger';
 import { LoginType } from '@/core/enums/login-type.enum';
 import { BaseModel } from '@/core/base-model.entity';
 import { OtpCode } from './otp-code.entity';
@@ -12,6 +14,7 @@ import { Report } from '@/features/reports/entities/report.entity';
 
 @Entity('users')
 export class User extends BaseModel {
+
   @Column({ type: 'enum', enum: Role, default: Role.User })
   role!: Role;
 
@@ -42,24 +45,31 @@ export class User extends BaseModel {
   @Column({ type: 'boolean', default: false })
   isDeleted!: boolean;
 
-  @OneToMany('OtpCode', (otpCode: any) => otpCode.user)
-  otpCodes?: OtpCode[];
+  @OneToMany(() => OtpCode, (otpCode) => otpCode.user)
+  @ApiHideProperty()
+  otpCodes?: Relation<OtpCode[]>;
 
   @OneToMany(() => BookReview, (bookReview) => bookReview.user)
-  bookReviews?: BookReview[];
+  @ApiHideProperty()
+  bookReviews?: Relation<BookReview[]>;
 
   @OneToMany(() => BookLike, (bookLike) => bookLike.user)
-  bookLikes?: BookLike[];
+  @ApiHideProperty()
+  bookLikes?: Relation<BookLike[]>;
 
   @OneToMany(() => CourseReview, (courseReview) => courseReview.user)
-  courseReviews?: CourseReview[];
+  @ApiHideProperty()
+  courseReviews?: Relation<CourseReview[]>;
 
   @OneToMany(() => CourseLike, (courseLike) => courseLike.user)
-  courseLikes?: CourseLike[];
+  @ApiHideProperty()
+  courseLikes?: Relation<CourseLike[]>;
 
   @OneToMany(() => UsersLessons, (lesson) => lesson.user)
-  lessons?: UsersLessons[];
+  @ApiHideProperty()
+  lessons?: Relation<UsersLessons[]>;
 
   @OneToMany(() => Report, (report) => report.user)
-  reports?: Report[];
+  @ApiHideProperty()
+  reports?: Relation<Report[]>;
 }
