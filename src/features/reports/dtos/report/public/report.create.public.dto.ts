@@ -1,6 +1,7 @@
 import { ReportType } from '@/core/enums/report-type.enum';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsInt, IsOptional, IsString, MaxLength } from 'class-validator';
+import { LoginType } from '@/core/enums/login-type.enum';
 // sharding
 //
 export class ReportCreatePublicDto {
@@ -9,7 +10,7 @@ export class ReportCreatePublicDto {
   categoryId!: number;
 
   @IsEnum(ReportType)
-  @ApiProperty()
+  @ApiProperty({ enum: ReportType })
   target!: ReportType;
 
   @IsInt()

@@ -34,6 +34,7 @@ export class AuthenticationAdminController {
   @UseInterceptors(FileInterceptor('profileImage', { storage: storageOptions }))
   async create(@Body() payload: UserCreateAdminDto, @UploadedFile() profileImage?: Express.Multer.File) {
     return await this.service.create(payload, profileImage);
+    console.log(payload);
   }
 
   @Get()

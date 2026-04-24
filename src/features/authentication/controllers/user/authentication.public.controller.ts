@@ -10,6 +10,7 @@ import { SetPasswordDto } from '@/features/authentication/dtos/user';
 export class AuthenticationPublicController{
   constructor(private readonly authService: AuthenticationPublicService) {}
 
+  // @Public()
   @Post('sign-up')
   async signUp(@Body() payload: SignUpDto) {
     return await this.authService.signUp(payload);

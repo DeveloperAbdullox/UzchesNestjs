@@ -6,13 +6,12 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class UserListAdminDto extends BaseModelListDto {
   @Expose()
-  @ApiProperty()
+  @ApiProperty({ enum: Role })
   role!: Role;
 
   @Expose()
   @ApiProperty()
   fullName!: string;
-
 
   @Expose()
   @ApiProperty()
@@ -27,7 +26,7 @@ export class UserListAdminDto extends BaseModelListDto {
   login!: string;
 
   @Expose()
-  @ApiProperty()
+  @ApiProperty({ enum: LoginType })
   loginType!: LoginType;
 
   @Expose()
