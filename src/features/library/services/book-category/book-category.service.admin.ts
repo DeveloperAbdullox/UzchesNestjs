@@ -9,7 +9,7 @@ import { BookCategoryListDtoAdmin } from '../../dtos/book-category/admin/book-ca
 @Injectable()
 export class BookCategoryServiceAdmin {
   async create(payload: BookCategoryCreateDtoAdmin): Promise<BookCategory> {
-    let alreadyExists = await BookCategory.countBy({ title: payload.title });
+    const alreadyExists = await BookCategory.countBy({ title: payload.title });
     if (alreadyExists) {
       throw new BadRequestException('Already exists');
     }

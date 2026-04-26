@@ -10,3 +10,4 @@ export class BookCategoryDtoPublic {
   @Expose()
   title!: string;
 }
+export class BookCategoryListDtoPublic {}
