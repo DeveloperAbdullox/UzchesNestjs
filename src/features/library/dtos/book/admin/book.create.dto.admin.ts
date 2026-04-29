@@ -1,7 +1,7 @@
-import { Allow, IsDateString, IsInt, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
+import { Allow, IsDateString, IsInt, IsNumber, IsOptional, IsString, Max, MaxLength, Min } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class BookCategoryCreateDtoAdmin {
+export class BookCreateAdminDto {
   @IsInt()
   @ApiProperty()
   authorId!: number;
@@ -23,7 +23,7 @@ export class BookCategoryCreateDtoAdmin {
   @ApiProperty()
   title!: string;
 
-  @Allow()
+  @IsOptional()
   @ApiProperty({ type: 'string', format: 'binary', required: false })
   image?: string;
 
@@ -39,6 +39,17 @@ export class BookCategoryCreateDtoAdmin {
   @IsOptional()
   @ApiProperty({ required: false })
   newPrice?: number;
+
+  @IsNumber()
+  @Max(5)
+  @Min(1)
+  @ApiProperty()
+  @IsOptional()
+  rating?: number;
+
+  @IsInt()
+  @ApiProperty({ default: 0 })
+  reviewsCount!: number;
 
   @IsInt()
   @ApiProperty()

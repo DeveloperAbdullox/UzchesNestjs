@@ -50,7 +50,7 @@ export class NewsControllerAdmin {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: number, @Body() payload: NewsUpdateDtoAdmin) {
+  async update(@Param('id', ParseIntPipe) id: number, @Body() payload: NewsUpdateDtoAdmin) {
     return await this.service.update(id, payload);
   }
 

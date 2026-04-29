@@ -18,6 +18,6 @@ export class BookServicePublic {
       throw new NotFoundException(`Book with id ${id} not found`);
     }
 
-    return plainToInstance(BookDetailDtoPublic, book)
+    return plainToInstance(BookDetailDtoPublic, book, {excludeExtraneousValues: true})
   }
 }

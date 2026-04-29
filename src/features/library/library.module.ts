@@ -7,22 +7,27 @@ import {
 import { BookCategoryServicePublic } from '@/features/library/services/book-category/book-category.service.public';
 import { BookControllerPublic } from './controllers/book/book.controller.public';
 import { BookServicePublic } from './services/book/book.service.public';
+import { BookControllerAdmin } from './controllers/book/book.controller.admin';
+import { BookAdminService } from './services/book/book.service.admin';
 
 @Module({
   controllers: [
     BookCategoryControllerAdmin, 
     BookCategoryControllerPublic,
-    BookControllerPublic
+    BookControllerPublic,
+    BookControllerAdmin
   ],
   providers: [
     BookCategoryServiceAdmin, 
     BookCategoryServicePublic,
-    BookServicePublic
+    BookServicePublic,
+    BookAdminService
   ],
   exports: [
     BookCategoryServiceAdmin, 
     BookCategoryServicePublic,
-    BookServicePublic
+    BookServicePublic,
+    BookAdminService
   ],
 })
 export class LibraryModule {}

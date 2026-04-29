@@ -1,7 +1,7 @@
 import { Allow, IsDateString, IsInt, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class BookCategoryUpdateDtoAdmin {
+export class BookUpdateAdminDto {
   @IsInt()
   @IsOptional()
   @ApiProperty({ required: false })

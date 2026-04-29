@@ -17,7 +17,7 @@ export class BookControllerPublic {
     return await this.service.getAll();
   }
 
-  @Get()
+  @Get(':id')
   @ApiOkResponse({ type: () => BookDetailDtoPublic, isArray: true})
   async getOne(@Param('id') id: number) {
     return await this.service.getOne(id);

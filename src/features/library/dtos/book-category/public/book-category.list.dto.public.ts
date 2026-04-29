@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
-export class BookCategoryDtoPublic {
+export class BookCategoryListDtoPublic {
   @ApiProperty()
   @Expose()
   id!: number;
@@ -10,4 +10,3 @@ export class BookCategoryDtoPublic {
   @Expose()
   title!: string;
 }
-export class BookCategoryListDtoPublic {}
