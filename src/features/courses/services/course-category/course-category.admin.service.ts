@@ -6,6 +6,7 @@ import {
   CourseCategoryUpdateAdminDto,
 } from '@/features/courses/dtos/course-category';
 import { plainToInstance } from 'class-transformer';
+import { CourseCategorydetailAdminDto } from '../../dtos/course-category/admin/course-category.detail.admin.dto';
 
 @Injectable()
 export class CourseCategoryAdminService {
@@ -30,6 +31,14 @@ export class CourseCategoryAdminService {
   async getAll() {
     const courseCategories = await CourseCategory.find();
     return plainToInstance(CourseCategoryListAdminDto, courseCategories);
+  }
+
+  async getOne(id: number) {
+    const courseCategory = await CourseCategory.findOneBy({ id })
+    if (!courseCategory) {
+      throw new NotFoundException('CourseCategory with given id not found');
+    }
+    return plainToInstance(CourseCategorydetailAdminDto, courseCategory, { excludeExtraneousValues: true });
   }
 
   async deleteOne(id: number) {

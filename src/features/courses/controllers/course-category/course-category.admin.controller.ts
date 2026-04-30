@@ -8,6 +8,7 @@ import {
   CourseCategoryListAdminDto,
   CourseCategoryUpdateAdminDto,
 } from '@/features/courses/dtos/course-category';
+import { CourseCategorydetailAdminDto } from '../../dtos/course-category/admin/course-category.detail.admin.dto';
 
 @ApiTags('CourseCategory - Admin')
 @ApiBearerAuth()
@@ -26,6 +27,12 @@ export class CourseCategoryAdminController {
   @ApiOkResponse({ type: () => CourseCategoryListAdminDto, isArray: true })
   async getAll() {
     return await this.service.getAll();
+  }
+
+  @Get(':id')
+  @ApiOkResponse({ type: () => CourseCategorydetailAdminDto, isArray: true})
+  async getOne(@Param('id', ParseIntPipe) id : number) {
+    return await this.service.getOne(id)
   }
 
   @Patch(':id')
