@@ -9,8 +9,16 @@ import { BookControllerPublic } from './controllers/book/book.controller.public'
 import { BookServicePublic } from './services/book/book.service.public';
 import { BookControllerAdmin } from './controllers/book/book.controller.admin';
 import { BookAdminService } from './services/book/book.service.admin';
+import { BookCategoryGetAllHandler } from './handlers/book-category/book-category.get-all.handler';
+import { BookCategoryCreateHandler } from './handlers/book-category/book-category.create.handler';
+import { BookCategoryRepository } from './repositories/book-category.repository';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { BookCategory } from './entities/book-category.entity';
 
 @Module({
+  imports: [
+    TypeOrmModule.forFeature([BookCategory])
+  ],
   controllers: [
     BookCategoryControllerAdmin, 
     BookCategoryControllerPublic,
@@ -21,7 +29,10 @@ import { BookAdminService } from './services/book/book.service.admin';
     BookCategoryServiceAdmin, 
     BookCategoryServicePublic,
     BookServicePublic,
-    BookAdminService
+    BookAdminService,
+    BookCategoryGetAllHandler,
+    BookCategoryCreateHandler,
+    BookCategoryRepository
   ],
   exports: [
     BookCategoryServiceAdmin, 
